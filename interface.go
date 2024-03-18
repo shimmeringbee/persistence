@@ -15,7 +15,7 @@ type Section interface {
 
 	Set(key string, value interface{}) error
 
-	Delete(key string)
+	Delete(key string) bool
 }
 
 func StoreComplex[T any](section Section, key string, val T, enc func(Section, string, T) error) error {
@@ -34,13 +34,3 @@ func RetrieveComplex[T any](section Section, key string, dec func(Section, strin
 		}
 	}
 }
-
-/*
-
-	IEEEAddress(key string, defValue ...zigbee.IEEEAddress) (zigbee.IEEEAddress, bool)
-	ClusterID(key string, defValue ...zigbee.ClusterID) (zigbee.ClusterID, bool)
-	Endpoint(key string, defValue ...zigbee.Endpoint) (zigbee.Endpoint, bool)
-	AttributeID(key string, defValue ...zcl.AttributeID) (zcl.AttributeID, bool)
-
-	As(key string, destValue any) bool
-*/
