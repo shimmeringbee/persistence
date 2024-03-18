@@ -27,9 +27,15 @@ func TestMemory_Delete(t *testing.T) {
 
 		assert.Contains(t, s.Keys(), "a")
 
-		s.Delete("a")
+		assert.True(t, s.Delete("a"))
 
 		assert.NotContains(t, s.Keys(), "a")
+	})
+
+	t.Run("returns false if key not present", func(t *testing.T) {
+		s := New()
+
+		assert.False(t, s.Delete("a"))
 	})
 }
 

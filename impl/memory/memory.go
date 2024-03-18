@@ -19,9 +19,9 @@ func (m *memory) Exists(key string) bool {
 	m.m.RLock()
 	defer m.m.RUnlock()
 
-	_, ok := m.kv[key]
+	_, found := m.kv[key]
 
-	return ok
+	return found
 }
 
 func (m *memory) Keys() []string {
@@ -156,10 +156,17 @@ func (m *memory) Set(key string, value interface{}) error {
 	return nil
 }
 
-func (m *memory) Delete(key string) {
+func (m *memory) Delete(key string) bool {
 	m.m.Lock()
 	defer m.m.Unlock()
-	delete(m.kv, key)
+
+	_, found := m.kv[key]
+
+	if found {
+		delete(m.kv, key)
+	}
+
+	return found
 }
 
 var _ persistence.Section = (*memory)(nil)
