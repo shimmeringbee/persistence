@@ -1,4 +1,4 @@
-package complex
+package converter
 
 import "github.com/shimmeringbee/persistence"
 
