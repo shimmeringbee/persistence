@@ -2,10 +2,16 @@ module github.com/shimmeringbee/persistence
 
 go 1.22.0
 
-require github.com/stretchr/testify v1.9.0
+require (
+	github.com/shimmeringbee/zcl v0.0.0-20240509210644-817a66d91348
+	github.com/stretchr/testify v1.9.0
+)
 
 require (
 	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect
+	github.com/shimmeringbee/bytecodec v0.0.0-20201107142444-94bb5c0baaee // indirect
+	github.com/shimmeringbee/zigbee v0.0.0-20201027194100-4e53cafc0f7a // indirect
+	github.com/stretchr/objx v0.5.2 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
