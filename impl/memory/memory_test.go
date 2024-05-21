@@ -130,41 +130,41 @@ func TestMemory_Int(t *testing.T) {
 		s := New()
 
 		val, found := s.Int("intKey")
-		assert.Equal(t, 0, val)
+		assert.Equal(t, int64(0), val)
 		assert.False(t, found)
 
 		val, found = s.Int("intKey", 1)
-		assert.Equal(t, 1, val)
+		assert.Equal(t, int64(1), val)
 		assert.False(t, found)
 
 		assert.NoError(t, s.Set("intKey", 2))
 
 		val, found = s.Int("intKey", 1)
-		assert.Equal(t, 2, val)
+		assert.Equal(t, int64(2), val)
 		assert.True(t, found)
 
 		assert.NoError(t, s.Set("int8Key", int8(2)))
 
 		val, found = s.Int("int8Key", 1)
-		assert.Equal(t, 2, val)
+		assert.Equal(t, int64(2), val)
 		assert.True(t, found)
 
 		assert.NoError(t, s.Set("int16Key", int16(2)))
 
 		val, found = s.Int("int16Key", 1)
-		assert.Equal(t, 2, val)
+		assert.Equal(t, int64(2), val)
 		assert.True(t, found)
 
 		assert.NoError(t, s.Set("int32Key", int32(2)))
 
 		val, found = s.Int("int32Key", 1)
-		assert.Equal(t, 2, val)
+		assert.Equal(t, int64(2), val)
 		assert.True(t, found)
 
 		assert.NoError(t, s.Set("int64Key", int64(2)))
 
 		val, found = s.Int("int64Key", 1)
-		assert.Equal(t, 2, val)
+		assert.Equal(t, int64(2), val)
 		assert.True(t, found)
 	})
 }
@@ -174,41 +174,41 @@ func TestMemory_UInt(t *testing.T) {
 		s := New()
 
 		val, found := s.UInt("intKey")
-		assert.Equal(t, uint(0), val)
+		assert.Equal(t, uint64(0), val)
 		assert.False(t, found)
 
 		val, found = s.UInt("intKey", 1)
-		assert.Equal(t, uint(1), val)
+		assert.Equal(t, uint64(1), val)
 		assert.False(t, found)
 
 		assert.NoError(t, s.Set("intKey", uint(2)))
 
 		val, found = s.UInt("intKey", 1)
-		assert.Equal(t, uint(2), val)
+		assert.Equal(t, uint64(2), val)
 		assert.True(t, found)
 
 		assert.NoError(t, s.Set("int8Key", uint8(2)))
 
 		val, found = s.UInt("int8Key", 1)
-		assert.Equal(t, uint(2), val)
+		assert.Equal(t, uint64(2), val)
 		assert.True(t, found)
 
 		assert.NoError(t, s.Set("int16Key", uint16(2)))
 
 		val, found = s.UInt("int16Key", 1)
-		assert.Equal(t, uint(2), val)
+		assert.Equal(t, uint64(2), val)
 		assert.True(t, found)
 
 		assert.NoError(t, s.Set("int32Key", uint32(2)))
 
 		val, found = s.UInt("int32Key", 1)
-		assert.Equal(t, uint(2), val)
+		assert.Equal(t, uint64(2), val)
 		assert.True(t, found)
 
 		assert.NoError(t, s.Set("int64Key", uint64(2)))
 
 		val, found = s.UInt("int64Key", 1)
-		assert.Equal(t, uint(2), val)
+		assert.Equal(t, uint64(2), val)
 		assert.True(t, found)
 	})
 }

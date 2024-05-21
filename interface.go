@@ -6,8 +6,8 @@ type Section interface {
 
 	Section(key ...string) Section
 
-	Int(key string, defValue ...int) (int, bool)
-	UInt(key string, defValue ...uint) (uint, bool)
+	Int(key string, defValue ...int64) (int64, bool)
+	UInt(key string, defValue ...uint64) (uint64, bool)
 	String(key string, defValue ...string) (string, bool)
 	Bool(key string, defValue ...bool) (bool, bool)
 	Float(key string, defValue ...float64) (float64, bool)
@@ -16,21 +16,4 @@ type Section interface {
 	Set(key string, value interface{}) error
 
 	Delete(key string) bool
-}
-
-func StoreComplex[T any](section Section, key string, val T, enc func(Section, string, T) error) error {
-	return enc(section, key, val)
-}
-
-func RetrieveComplex[T any](section Section, key string, dec func(Section, string) (T, bool), defValue ...T) (T, bool) {
-	if v, ok := dec(section, key); ok {
-		return v, ok
-	} else {
-		if len(defValue) > 0 {
-			return defValue[0], false
-		} else {
-			v = *new(T)
-			return v, false
-		}
-	}
 }

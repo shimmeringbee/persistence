@@ -86,11 +86,11 @@ func genericRetrieve[T any](m *memory, key string, defValue ...T) (T, bool) {
 	}
 }
 
-func (m *memory) Int(key string, defValue ...int) (int, bool) {
+func (m *memory) Int(key string, defValue ...int64) (int64, bool) {
 	return genericRetrieve(m, key, defValue...)
 }
 
-func (m *memory) UInt(key string, defValue ...uint) (uint, bool) {
+func (m *memory) UInt(key string, defValue ...uint64) (uint64, bool) {
 	return genericRetrieve(m, key, defValue...)
 }
 
@@ -117,25 +117,25 @@ func (m *memory) Set(key string, value interface{}) error {
 	case string:
 		sV = v
 	case int:
-		sV = v
+		sV = int64(v)
 	case int8:
-		sV = int(v)
+		sV = int64(v)
 	case int16:
-		sV = int(v)
+		sV = int64(v)
 	case int32:
-		sV = int(v)
+		sV = int64(v)
 	case int64:
-		sV = int(v)
-	case uint:
 		sV = v
+	case uint:
+		sV = uint64(v)
 	case uint8:
-		sV = uint(v)
+		sV = uint64(v)
 	case uint16:
-		sV = uint(v)
+		sV = uint64(v)
 	case uint32:
-		sV = uint(v)
+		sV = uint64(v)
 	case uint64:
-		sV = uint(v)
+		sV = v
 	case float32:
 		sV = float64(v)
 	case float64:
