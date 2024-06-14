@@ -53,6 +53,36 @@ func TestIEEEAddress(t *testing.T) {
 	})
 }
 
+func TestNetworkAddress(t *testing.T) {
+	t.Run("stored and retrieved", func(t *testing.T) {
+		s := memory.New()
+
+		expected := zigbee.NetworkAddress(0x1122)
+
+		err := Store(s, Key, expected, NetworkAddressEncoder)
+		assert.NoError(t, err)
+
+		actual, found := Retrieve(s, Key, NetworkAddressDecoder)
+		assert.True(t, found)
+		assert.Equal(t, expected, actual)
+	})
+}
+
+func TestLogicalType(t *testing.T) {
+	t.Run("stored and retrieved", func(t *testing.T) {
+		s := memory.New()
+
+		expected := zigbee.Router
+
+		err := Store(s, Key, expected, LogicalTypeEncoder)
+		assert.NoError(t, err)
+
+		actual, found := Retrieve(s, Key, LogicalTypeDecoder)
+		assert.True(t, found)
+		assert.Equal(t, expected, actual)
+	})
+}
+
 func TestAttributeID(t *testing.T) {
 	t.Run("stored and retrieved", func(t *testing.T) {
 		s := memory.New()

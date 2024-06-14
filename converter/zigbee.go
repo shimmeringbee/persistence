@@ -47,6 +47,30 @@ func IEEEDecoder(s persistence.Section, k string) (zigbee.IEEEAddress, bool) {
 	}
 }
 
+func NetworkAddressEncoder(s persistence.Section, k string, v zigbee.NetworkAddress) error {
+	return s.Set(k, int64(v))
+}
+
+func NetworkAddressDecoder(s persistence.Section, k string) (zigbee.NetworkAddress, bool) {
+	if ev, found := s.Int(k); found {
+		return zigbee.NetworkAddress(ev), true
+	} else {
+		return 0, false
+	}
+}
+
+func LogicalTypeEncoder(s persistence.Section, k string, v zigbee.LogicalType) error {
+	return s.Set(k, int64(v))
+}
+
+func LogicalTypeDecoder(s persistence.Section, k string) (zigbee.LogicalType, bool) {
+	if ev, found := s.Int(k); found {
+		return zigbee.LogicalType(ev), true
+	} else {
+		return 0, false
+	}
+}
+
 func ClusterIDEncoder(s persistence.Section, k string, v zigbee.ClusterID) error {
 	return s.Set(k, int64(v))
 }
