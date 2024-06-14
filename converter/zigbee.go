@@ -4,6 +4,7 @@ import (
 	"github.com/shimmeringbee/persistence"
 	"github.com/shimmeringbee/zcl"
 	"github.com/shimmeringbee/zigbee"
+	"strconv"
 )
 
 func AttributeIDEncoder(s persistence.Section, k string, v zcl.AttributeID) error {
@@ -27,6 +28,22 @@ func AttributeDataTypeDecoder(s persistence.Section, k string) (zcl.AttributeDat
 		return zcl.AttributeDataType(ev), true
 	} else {
 		return 0, false
+	}
+}
+
+func IEEEEncoder(s persistence.Section, k string, v zigbee.IEEEAddress) error {
+	return s.Set(k, v.String())
+}
+
+func IEEEDecoder(s persistence.Section, k string) (zigbee.IEEEAddress, bool) {
+	if ev, found := s.String(k); found {
+		if value, err := strconv.ParseUint(ev, 16, 64); err != nil {
+			return zigbee.EmptyIEEEAddress, false
+		} else {
+			return zigbee.IEEEAddress(value), true
+		}
+	} else {
+		return zigbee.EmptyIEEEAddress, false
 	}
 }
 

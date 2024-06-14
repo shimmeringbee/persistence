@@ -38,6 +38,21 @@ func TestEndpoint(t *testing.T) {
 	})
 }
 
+func TestIEEEAddress(t *testing.T) {
+	t.Run("stored and retrieved", func(t *testing.T) {
+		s := memory.New()
+
+		expected := zigbee.GenerateLocalAdministeredIEEEAddress()
+
+		err := Store(s, Key, expected, IEEEEncoder)
+		assert.NoError(t, err)
+
+		actual, found := Retrieve(s, Key, IEEEDecoder)
+		assert.True(t, found)
+		assert.Equal(t, expected, actual)
+	})
+}
+
 func TestAttributeID(t *testing.T) {
 	t.Run("stored and retrieved", func(t *testing.T) {
 		s := memory.New()
