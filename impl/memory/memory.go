@@ -16,6 +16,15 @@ type memory struct {
 	sections map[string]persistence.Section
 }
 
+func (m *memory) SectionExists(key string) bool {
+	m.m.RLock()
+	defer m.m.RUnlock()
+
+	_, found := m.sections[key]
+
+	return found
+}
+
 func (m *memory) Section(key ...string) persistence.Section {
 	m.m.RLock()
 	s, ok := m.sections[key[0]]
@@ -48,7 +57,7 @@ func (m *memory) SectionKeys() []string {
 	return keys
 }
 
-func (m *memory) DeleteSection(key string) bool {
+func (m *memory) SectionDelete(key string) bool {
 	m.m.Lock()
 	defer m.m.Unlock()
 

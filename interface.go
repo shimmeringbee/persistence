@@ -3,7 +3,8 @@ package persistence
 type Section interface {
 	Section(key ...string) Section
 	SectionKeys() []string
-	DeleteSection(key string) bool
+	SectionExists(key string) bool
+	SectionDelete(key string) bool
 
 	Keys() []string
 	Exists(key string) bool

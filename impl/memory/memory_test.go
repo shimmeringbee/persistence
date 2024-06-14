@@ -252,7 +252,7 @@ func TestMemory_DeleteSection(t *testing.T) {
 		s.Section("one")
 		assert.Contains(t, s.SectionKeys(), "one")
 
-		s.DeleteSection("one")
+		s.SectionDelete("one")
 		assert.NotContains(t, s.SectionKeys(), "one")
 	})
 }
@@ -264,6 +264,16 @@ func TestMemory_Exists(t *testing.T) {
 		_ = s.Set("key", "value")
 		assert.True(t, s.Exists("key"))
 		assert.False(t, s.Exists("otherKey"))
+	})
+}
+
+func TestMemory_SectionExists(t *testing.T) {
+	t.Run("returns if a section exists", func(t *testing.T) {
+		s := New()
+
+		_ = s.Section("key")
+		assert.True(t, s.SectionExists("key"))
+		assert.False(t, s.SectionExists("otherKey"))
 	})
 }
 
