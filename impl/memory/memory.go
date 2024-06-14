@@ -7,12 +7,58 @@ import (
 )
 
 func New() persistence.Section {
-	return &memory{m: &sync.RWMutex{}, kv: make(map[string]interface{})}
+	return &memory{m: &sync.RWMutex{}, kv: make(map[string]interface{}), sections: make(map[string]persistence.Section)}
 }
 
 type memory struct {
-	m  *sync.RWMutex
-	kv map[string]interface{}
+	m        *sync.RWMutex
+	kv       map[string]interface{}
+	sections map[string]persistence.Section
+}
+
+func (m *memory) Section(key ...string) persistence.Section {
+	m.m.RLock()
+	s, ok := m.sections[key[0]]
+	m.m.RUnlock()
+
+	if !ok {
+		s = New()
+		m.m.Lock()
+		m.sections[key[0]] = s
+		m.m.Unlock()
+	}
+
+	if len(key) > 1 {
+		return s.Section(key[1:]...)
+	} else {
+		return s
+	}
+}
+
+func (m *memory) SectionKeys() []string {
+	m.m.RLock()
+	defer m.m.RUnlock()
+
+	var keys = make([]string, 0, len(m.sections))
+
+	for k := range m.sections {
+		keys = append(keys, k)
+	}
+
+	return keys
+}
+
+func (m *memory) DeleteSection(key string) bool {
+	m.m.Lock()
+	defer m.m.Unlock()
+
+	_, found := m.sections[key]
+
+	if found {
+		delete(m.sections, key)
+	}
+
+	return found
 }
 
 func (m *memory) Exists(key string) bool {
@@ -35,35 +81,6 @@ func (m *memory) Keys() []string {
 	}
 
 	return keys
-}
-
-func (m *memory) Section(key ...string) persistence.Section {
-	m.m.RLock()
-	v, ok := m.kv[key[0]]
-	m.m.RUnlock()
-
-	var s persistence.Section
-
-	if ok {
-		if cs, cok := v.(persistence.Section); cok {
-			s = cs
-		} else {
-			ok = false
-		}
-	}
-
-	if !ok {
-		s = New()
-		m.m.Lock()
-		m.kv[key[0]] = s
-		m.m.Unlock()
-	}
-
-	if len(key) > 1 {
-		return s.Section(key[1:]...)
-	} else {
-		return s
-	}
 }
 
 func genericRetrieve[T any](m *memory, key string, defValue ...T) (T, bool) {

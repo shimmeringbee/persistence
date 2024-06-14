@@ -1,10 +1,12 @@
 package persistence
 
 type Section interface {
+	Section(key ...string) Section
+	SectionKeys() []string
+	DeleteSection(key string) bool
+
 	Keys() []string
 	Exists(key string) bool
-
-	Section(key ...string) Section
 
 	Int(key string, defValue ...int64) (int64, bool)
 	UInt(key string, defValue ...uint64) (uint64, bool)

@@ -220,16 +220,40 @@ func TestMemory_Section(t *testing.T) {
 		cs := s.Section("tier1", "tier2")
 		_ = cs.Set("key", "value")
 
-		assert.Contains(t, s.Keys(), "tier1")
+		assert.Contains(t, s.SectionKeys(), "tier1")
 
 		t1 := s.Section("tier1")
 
-		assert.Contains(t, t1.Keys(), "tier2")
+		assert.Contains(t, t1.SectionKeys(), "tier2")
 
 		t2 := t1.Section("tier2")
 
 		v, _ := t2.String("key")
 		assert.Equal(t, "value", v)
+	})
+}
+
+func TestMemory_SectionKeys(t *testing.T) {
+	t.Run("seconds can be listed", func(t *testing.T) {
+		s := New()
+
+		s.Section("one")
+		s.Section("two")
+
+		assert.Contains(t, s.SectionKeys(), "one")
+		assert.Contains(t, s.SectionKeys(), "two")
+	})
+}
+
+func TestMemory_DeleteSection(t *testing.T) {
+	t.Run("seconds can be deleted", func(t *testing.T) {
+		s := New()
+
+		s.Section("one")
+		assert.Contains(t, s.SectionKeys(), "one")
+
+		s.DeleteSection("one")
+		assert.NotContains(t, s.SectionKeys(), "one")
 	})
 }
 
@@ -240,5 +264,27 @@ func TestMemory_Exists(t *testing.T) {
 		_ = s.Set("key", "value")
 		assert.True(t, s.Exists("key"))
 		assert.False(t, s.Exists("otherKey"))
+	})
+}
+
+func TestMemory_SectionKeyNotClash(t *testing.T) {
+	t.Run("ensure that keys and sections dont shared the same name space", func(t *testing.T) {
+		s := New()
+
+		s.Section("key")
+		s.Section("key2")
+		s.Set("key", 42)
+		s.Set("key3", 42)
+
+		actualKeyInt, _ := s.Int("key")
+		assert.Equal(t, int64(42), actualKeyInt)
+
+		assert.Contains(t, s.Keys(), "key")
+		assert.NotContains(t, s.Keys(), "key2")
+		assert.Contains(t, s.Keys(), "key3")
+
+		assert.Contains(t, s.SectionKeys(), "key")
+		assert.Contains(t, s.SectionKeys(), "key2")
+		assert.NotContains(t, s.SectionKeys(), "key3")
 	})
 }
