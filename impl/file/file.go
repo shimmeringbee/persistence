@@ -36,6 +36,7 @@ type file struct {
 }
 
 var _ persistence.Section = (*file)(nil)
+var _ persistence.Syncer = (*file)(nil)
 
 func (f *file) Section(key ...string) persistence.Section {
 	f.m.Lock()

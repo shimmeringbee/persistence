@@ -22,6 +22,10 @@ type Section interface {
 	Delete(key string) bool
 }
 
+type Syncer interface {
+	Sync()
+}
+
 type ValueType uint8
 
 const (
