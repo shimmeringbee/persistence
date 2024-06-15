@@ -6,5 +6,9 @@ import (
 )
 
 func TestMemory(t *testing.T) {
-	test.Impl{New: New}.Test(t)
+	test.Impl{
+		New:    New,
+		Done:   test.EmptyDone,
+		Switch: test.EmptySwitch,
+	}.Test(t)
 }

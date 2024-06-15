@@ -16,6 +16,33 @@ type memory struct {
 	sections map[string]persistence.Section
 }
 
+func (m *memory) Type(key string) persistence.ValueType {
+	m.m.RLock()
+	v, ok := m.kv[key]
+	m.m.RUnlock()
+
+	if ok {
+		switch v.(type) {
+		case int64:
+			return persistence.Int
+		case uint64:
+			return persistence.UnsignedInt
+		case string:
+			return persistence.String
+		case float64:
+			return persistence.Float
+		case bool:
+			return persistence.Bool
+		case []byte:
+			return persistence.Bytes
+		}
+	}
+
+	return persistence.None
+}
+
+var _ persistence.Section = (*memory)(nil)
+
 func (m *memory) SectionExists(key string) bool {
 	m.m.RLock()
 	defer m.m.RUnlock()
@@ -136,7 +163,7 @@ func (m *memory) Bytes(key string, defValue ...[]byte) ([]byte, bool) {
 	return genericRetrieve(m, key, defValue...)
 }
 
-func (m *memory) Set(key string, value interface{}) error {
+func (m *memory) Set(key string, value interface{}) {
 	var sV interface{}
 
 	switch v := value.(type) {
@@ -171,15 +198,13 @@ func (m *memory) Set(key string, value interface{}) error {
 	case []byte:
 		sV = v
 	default:
-		return fmt.Errorf("section set: unknown type: %T", v)
+		panic(fmt.Errorf("section set: unknown type: %T", v))
 	}
 
 	m.m.Lock()
 	defer m.m.Unlock()
 
 	m.kv[key] = sV
-
-	return nil
 }
 
 func (m *memory) Delete(key string) bool {
@@ -194,5 +219,3 @@ func (m *memory) Delete(key string) bool {
 
 	return found
 }
-
-var _ persistence.Section = (*memory)(nil)
