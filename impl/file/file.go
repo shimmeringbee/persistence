@@ -18,6 +18,7 @@ func New(dir string) persistence.Section {
 
 	dirWithoutPathSep, _ := strings.CutSuffix(dir, string(os.PathSeparator))
 	f.dir = fmt.Sprintf("%s%c", dirWithoutPathSep, os.PathSeparator)
+	_ = os.MkdirAll(f.dir, 600)
 
 	f.load()
 
@@ -44,7 +45,6 @@ func (f *file) Section(key ...string) persistence.Section {
 
 	if !ok {
 		dir := fmt.Sprintf("%s%s", f.dir, key[0])
-		_ = os.MkdirAll(dir, 600)
 
 		s, _ = New(dir).(*file)
 		f.sections[key[0]] = s
@@ -212,12 +212,13 @@ func (f *file) dirty() {
 
 func (f *file) dirtySync() {
 	f.m.Lock()
-	defer f.m.Unlock()
 
 	if f.dirtyTimer != nil {
 		f.dirtyTimer.Stop()
 		f.dirtyTimer = nil
 	}
+
+	f.m.Unlock()
 
 	f.sync(false)
 }
