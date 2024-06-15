@@ -7,8 +7,8 @@ import (
 	"strconv"
 )
 
-func AttributeIDEncoder(s persistence.Section, k string, v zcl.AttributeID) error {
-	return s.Set(k, int64(v))
+func AttributeIDEncoder(s persistence.Section, k string, v zcl.AttributeID) {
+	s.Set(k, int64(v))
 }
 
 func AttributeIDDecoder(s persistence.Section, k string) (zcl.AttributeID, bool) {
@@ -19,8 +19,8 @@ func AttributeIDDecoder(s persistence.Section, k string) (zcl.AttributeID, bool)
 	}
 }
 
-func AttributeDataTypeEncoder(s persistence.Section, k string, v zcl.AttributeDataType) error {
-	return s.Set(k, int64(v))
+func AttributeDataTypeEncoder(s persistence.Section, k string, v zcl.AttributeDataType) {
+	s.Set(k, int64(v))
 }
 
 func AttributeDataTypeDecoder(s persistence.Section, k string) (zcl.AttributeDataType, bool) {
@@ -31,8 +31,8 @@ func AttributeDataTypeDecoder(s persistence.Section, k string) (zcl.AttributeDat
 	}
 }
 
-func IEEEEncoder(s persistence.Section, k string, v zigbee.IEEEAddress) error {
-	return s.Set(k, v.String())
+func IEEEEncoder(s persistence.Section, k string, v zigbee.IEEEAddress) {
+	s.Set(k, v.String())
 }
 
 func IEEEDecoder(s persistence.Section, k string) (zigbee.IEEEAddress, bool) {
@@ -47,8 +47,8 @@ func IEEEDecoder(s persistence.Section, k string) (zigbee.IEEEAddress, bool) {
 	}
 }
 
-func NetworkAddressEncoder(s persistence.Section, k string, v zigbee.NetworkAddress) error {
-	return s.Set(k, int64(v))
+func NetworkAddressEncoder(s persistence.Section, k string, v zigbee.NetworkAddress) {
+	s.Set(k, int64(v))
 }
 
 func NetworkAddressDecoder(s persistence.Section, k string) (zigbee.NetworkAddress, bool) {
@@ -59,8 +59,8 @@ func NetworkAddressDecoder(s persistence.Section, k string) (zigbee.NetworkAddre
 	}
 }
 
-func LogicalTypeEncoder(s persistence.Section, k string, v zigbee.LogicalType) error {
-	return s.Set(k, int64(v))
+func LogicalTypeEncoder(s persistence.Section, k string, v zigbee.LogicalType) {
+	s.Set(k, int64(v))
 }
 
 func LogicalTypeDecoder(s persistence.Section, k string) (zigbee.LogicalType, bool) {
@@ -71,8 +71,8 @@ func LogicalTypeDecoder(s persistence.Section, k string) (zigbee.LogicalType, bo
 	}
 }
 
-func ClusterIDEncoder(s persistence.Section, k string, v zigbee.ClusterID) error {
-	return s.Set(k, int64(v))
+func ClusterIDEncoder(s persistence.Section, k string, v zigbee.ClusterID) {
+	s.Set(k, int64(v))
 }
 
 func ClusterIDDecoder(s persistence.Section, k string) (zigbee.ClusterID, bool) {
@@ -83,8 +83,8 @@ func ClusterIDDecoder(s persistence.Section, k string) (zigbee.ClusterID, bool) 
 	}
 }
 
-func EndpointEncoder(s persistence.Section, k string, v zigbee.Endpoint) error {
-	return s.Set(k, int64(v))
+func EndpointEncoder(s persistence.Section, k string, v zigbee.Endpoint) {
+	s.Set(k, int64(v))
 }
 
 func EndpointDecoder(s persistence.Section, k string) (zigbee.Endpoint, bool) {

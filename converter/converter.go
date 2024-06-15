@@ -2,8 +2,8 @@ package converter
 
 import "github.com/shimmeringbee/persistence"
 
-func Store[T any](section persistence.Section, key string, val T, enc func(persistence.Section, string, T) error) error {
-	return enc(section, key, val)
+func Store[T any](section persistence.Section, key string, val T, enc func(persistence.Section, string, T)) {
+	enc(section, key, val)
 }
 
 func Retrieve[T any](section persistence.Section, key string, dec func(persistence.Section, string) (T, bool), defValue ...T) (T, bool) {

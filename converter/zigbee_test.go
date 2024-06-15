@@ -14,8 +14,7 @@ func TestClusterID(t *testing.T) {
 
 		expected := zigbee.ClusterID(1)
 
-		err := Store(s, Key, expected, ClusterIDEncoder)
-		assert.NoError(t, err)
+		Store(s, Key, expected, ClusterIDEncoder)
 
 		actual, found := Retrieve(s, Key, ClusterIDDecoder)
 		assert.True(t, found)
@@ -29,8 +28,7 @@ func TestEndpoint(t *testing.T) {
 
 		expected := zigbee.Endpoint(1)
 
-		err := Store(s, Key, expected, EndpointEncoder)
-		assert.NoError(t, err)
+		Store(s, Key, expected, EndpointEncoder)
 
 		actual, found := Retrieve(s, Key, EndpointDecoder)
 		assert.True(t, found)
@@ -44,8 +42,7 @@ func TestIEEEAddress(t *testing.T) {
 
 		expected := zigbee.GenerateLocalAdministeredIEEEAddress()
 
-		err := Store(s, Key, expected, IEEEEncoder)
-		assert.NoError(t, err)
+		Store(s, Key, expected, IEEEEncoder)
 
 		actual, found := Retrieve(s, Key, IEEEDecoder)
 		assert.True(t, found)
@@ -59,8 +56,7 @@ func TestNetworkAddress(t *testing.T) {
 
 		expected := zigbee.NetworkAddress(0x1122)
 
-		err := Store(s, Key, expected, NetworkAddressEncoder)
-		assert.NoError(t, err)
+		Store(s, Key, expected, NetworkAddressEncoder)
 
 		actual, found := Retrieve(s, Key, NetworkAddressDecoder)
 		assert.True(t, found)
@@ -74,8 +70,7 @@ func TestLogicalType(t *testing.T) {
 
 		expected := zigbee.Router
 
-		err := Store(s, Key, expected, LogicalTypeEncoder)
-		assert.NoError(t, err)
+		Store(s, Key, expected, LogicalTypeEncoder)
 
 		actual, found := Retrieve(s, Key, LogicalTypeDecoder)
 		assert.True(t, found)
@@ -89,8 +84,7 @@ func TestAttributeID(t *testing.T) {
 
 		expected := zcl.AttributeID(1)
 
-		err := Store(s, Key, expected, AttributeIDEncoder)
-		assert.NoError(t, err)
+		Store(s, Key, expected, AttributeIDEncoder)
 
 		actual, found := Retrieve(s, Key, AttributeIDDecoder)
 		assert.True(t, found)
@@ -104,8 +98,7 @@ func TestAttributeDataType(t *testing.T) {
 
 		expected := zcl.AttributeDataType(1)
 
-		err := Store(s, Key, expected, AttributeDataTypeEncoder)
-		assert.NoError(t, err)
+		Store(s, Key, expected, AttributeDataTypeEncoder)
 
 		actual, found := Retrieve(s, Key, AttributeDataTypeDecoder)
 		assert.True(t, found)

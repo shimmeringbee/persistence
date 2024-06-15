@@ -15,8 +15,7 @@ func TestTime(t *testing.T) {
 
 		expected := time.UnixMilli(time.Now().UnixMilli())
 
-		err := Store(s, Key, expected, TimeEncoder)
-		assert.NoError(t, err)
+		Store(s, Key, expected, TimeEncoder)
 
 		actual, found := Retrieve(s, Key, TimeDecoder)
 		assert.True(t, found)
@@ -30,8 +29,7 @@ func TestDuration(t *testing.T) {
 
 		expected := time.Duration(1234) * time.Millisecond
 
-		err := Store(s, Key, expected, DurationEncoder)
-		assert.NoError(t, err)
+		Store(s, Key, expected, DurationEncoder)
 
 		actual, found := Retrieve(s, Key, DurationDecoder)
 		assert.True(t, found)

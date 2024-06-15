@@ -5,8 +5,8 @@ import (
 	"time"
 )
 
-func TimeEncoder(s persistence.Section, k string, v time.Time) error {
-	return s.Set(k, v.UnixMilli())
+func TimeEncoder(s persistence.Section, k string, v time.Time) {
+	s.Set(k, v.UnixMilli())
 }
 
 func TimeDecoder(s persistence.Section, k string) (time.Time, bool) {
@@ -17,8 +17,8 @@ func TimeDecoder(s persistence.Section, k string) (time.Time, bool) {
 	}
 }
 
-func DurationEncoder(s persistence.Section, k string, v time.Duration) error {
-	return s.Set(k, v.Milliseconds())
+func DurationEncoder(s persistence.Section, k string, v time.Duration) {
+	s.Set(k, v.Milliseconds())
 }
 
 func DurationDecoder(s persistence.Section, k string) (time.Duration, bool) {
