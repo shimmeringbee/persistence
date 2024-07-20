@@ -18,7 +18,7 @@ func New(dir string) persistence.Section {
 
 	dirWithoutPathSep, _ := strings.CutSuffix(dir, string(os.PathSeparator))
 	f.dir = fmt.Sprintf("%s%c", dirWithoutPathSep, os.PathSeparator)
-	_ = os.MkdirAll(f.dir, 600)
+	_ = os.MkdirAll(f.dir, 0700)
 
 	f.load()
 
